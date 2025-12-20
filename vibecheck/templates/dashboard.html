@@ -1,0 +1,634 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css" crossorigin="anonymous">
+  <title>Dashboard | VibeCheck</title>
+  <style>
+    :root {
+      --primary: #000000;
+      --secondary: #FFFFFF;
+      --accent: #FF5E5B;
+      --success: #2ecc71;
+      --warning: #f39c12;
+      --danger: #e74c3c;
+      --light-gray: #f8f9fa;
+      --medium-gray: #6c757d;
+      --shadow: 8px 8px 0px var(--primary);
+      --light-shadow: 4px 4px 0px var(--primary);
+      --gradient-bg: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    }
+    
+    * { 
+      margin: 0; 
+      padding: 0; 
+      box-sizing: border-box; 
+      font-family: 'Courier New', monospace; 
+    }
+    
+    body { 
+      background-color: var(--light-gray); 
+      min-height: 100vh; 
+      color: var(--primary); 
+    }
+    
+    /* Navbar styles */
+    .navbar { 
+      background-color: var(--secondary); 
+      border-bottom: 2px solid var(--primary); 
+      padding: 0 2rem; 
+      position: sticky; 
+      top: 0; 
+      z-index: 1000; 
+      box-shadow: var(--shadow); 
+    }
+    
+    .navbar-container { 
+      max-width: 1400px; 
+      margin: 0 auto; 
+      display: flex; 
+      justify-content: space-between; 
+      align-items: center; 
+      height: 70px; 
+    }
+    
+    .logo { 
+      display: flex; 
+      align-items: center; 
+      font-size: 1.5rem; 
+      font-weight: 700; 
+      color: var(--primary); 
+      text-decoration: none; 
+    }
+    
+    .logo-icon { 
+      width: 40px; 
+      height: 40px; 
+      background: var(--accent); 
+      border-radius: 12px; 
+      margin-right: 12px; 
+      display: flex; 
+      align-items: center; 
+      justify-content: center; 
+      color: var(--secondary); 
+      font-weight: bold; 
+      font-size: 1.2rem; 
+      border: 2px solid var(--primary); 
+      box-shadow: var(--shadow); 
+    }
+    
+    .nav-menu { 
+      display: flex; 
+      align-items: center; 
+      list-style: none; 
+      gap: 2rem; 
+    }
+    
+    .nav-link { 
+      color: var(--primary); 
+      text-decoration: none; 
+      font-weight: 600; 
+      padding: 0.6rem 1rem; 
+      border: 2px solid transparent; 
+      transition: all 0.3s ease; 
+    }
+    
+    .nav-link:hover { 
+      border: 2px solid var(--primary); 
+      background-color: var(--accent); 
+      color: var(--secondary); 
+      box-shadow: var(--shadow); 
+    }
+
+    /* Dashboard Content */
+    .dashboard-content {
+      padding: 2rem;
+      max-width: 1400px;
+      margin: 0 auto;
+    }
+
+    /* Hero Section */
+    .hero-section {
+      background: var(--gradient-bg);
+      color: var(--secondary);
+      padding: 3rem 2rem;
+      margin-bottom: 3rem;
+      border: 2px solid var(--primary);
+      box-shadow: var(--shadow);
+      text-align: center;
+    }
+
+    .hero-title {
+      font-size: 2.5rem;
+      font-weight: 700;
+      margin-bottom: 1rem;
+    }
+
+    .hero-subtitle {
+      font-size: 1.1rem;
+    }
+
+    /* Video Section */
+    .video-section {
+      background: var(--secondary);
+      border: 2px solid var(--primary);
+      padding: 2rem;
+      margin-bottom: 3rem;
+      box-shadow: var(--shadow);
+    }
+
+    .video-title {
+      font-size: 1.8rem;
+      font-weight: 700;
+      margin-bottom: 0.5rem;
+      color: var(--primary);
+    }
+
+    .video-channel {
+      font-size: 1.1rem;
+      color: var(--medium-gray);
+      margin-bottom: 1.5rem;
+    }
+
+    .video-stats {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+      gap: 1rem;
+      margin-bottom: 2rem;
+    }
+
+    .stat-card {
+      background: var(--light-gray);
+      border: 2px solid var(--primary);
+      padding: 1rem;
+      text-align: center;
+      box-shadow: var(--light-shadow);
+    }
+
+    .stat-number {
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: var(--accent);
+      display: block;
+    }
+
+    .stat-label {
+      font-size: 0.9rem;
+      color: var(--medium-gray);
+      text-transform: uppercase;
+      font-weight: 600;
+    }
+
+    .video-embed {
+      position: relative;
+      padding-bottom: 56.25%;
+      height: 0;
+      overflow: hidden;
+      max-width: 100%;
+      background: #000;
+      border: 2px solid var(--primary);
+    }
+
+    .video-embed iframe {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+    }
+
+    /* Analysis Grid */
+    .analysis-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 2rem;
+      margin-bottom: 2rem;
+    }
+
+    .analysis-card {
+      background: var(--secondary);
+      border: 2px solid var(--primary);
+      padding: 2rem;
+      box-shadow: var(--shadow);
+    }
+
+    .analysis-card.full-width {
+      grid-column: 1 / -1;
+    }
+
+    .analysis-card h2 {
+      font-size: 1.5rem;
+      font-weight: 700;
+      margin-bottom: 1.5rem;
+      color: var(--primary);
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .analysis-card .icon {
+      font-size: 1.3rem;
+      color: var(--accent);
+    }
+
+    /* Simple Pie Chart using CSS */
+    .pie-chart-container {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 2rem;
+      margin-bottom: 2rem;
+    }
+
+    .pie-chart {
+      width: 250px;
+      height: 250px;
+      border-radius: 50%;
+      border: 3px solid var(--primary);
+      box-shadow: var(--light-shadow);
+    }
+
+    .pie-legend {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+    }
+
+    .legend-item {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .legend-color {
+      width: 20px;
+      height: 20px;
+      border: 2px solid var(--primary);
+    }
+
+    .legend-color.positive { background: var(--success); }
+    .legend-color.negative { background: var(--danger); }
+    .legend-color.neutral { background: var(--warning); }
+
+    /* Sentiment Bars */
+    .sentiment-bars {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+    }
+
+    .sentiment-bar {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+    }
+
+    .sentiment-label {
+      min-width: 80px;
+      font-weight: 700;
+      text-transform: capitalize;
+    }
+
+    .bar-container {
+      flex: 1;
+      height: 30px;
+      background: var(--light-gray);
+      border: 2px solid var(--primary);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .bar-fill {
+      height: 100%;
+      transition: width 0.8s ease;
+    }
+
+    .bar-fill.positive { background: var(--success); }
+    .bar-fill.negative { background: var(--danger); }
+    .bar-fill.neutral { background: var(--warning); }
+
+    .sentiment-percent {
+      min-width: 120px;
+      text-align: right;
+      font-weight: 600;
+    }
+
+    /* Word Cloud */
+    .keywords-container {
+      text-align: center;
+      padding: 1rem;
+    }
+
+    .keywords-container img {
+      padding: 4px;
+      width: 100%;
+      max-width: 100%;
+      height: auto;
+      border: 2px solid var(--primary);
+      box-shadow: var(--light-shadow);
+    }
+
+    /* Language Stats */
+    .language-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+      gap: 1rem;
+    }
+
+    .language-item {
+      background: var(--light-gray);
+      border: 2px solid var(--primary);
+      padding: 1rem;
+      text-align: center;
+      box-shadow: var(--light-shadow);
+    }
+
+    .language-name {
+      font-weight: 700;
+      margin-bottom: 0.5rem;
+    }
+
+    .language-count {
+      font-size: 1rem;
+      color: var(--accent);
+      font-weight: 700;
+    }
+
+    .language-percentage {
+      font-size: 0.9rem;
+      color: var(--medium-gray);
+      margin-top: 0.2rem;
+    }
+
+    /* Footer */
+    .footer { 
+      background: var(--primary); 
+      color: var(--secondary); 
+      padding: 3rem 2rem; 
+      text-align: left; 
+      margin-top: 4rem; 
+      display: flex; 
+      justify-content: center; 
+      align-items: flex-start; 
+      gap: 2rem; 
+    }
+    
+    .footer-section { 
+      flex: 1; 
+    }
+    
+    .divider { 
+      width: 1px; 
+      background: var(--secondary); 
+      opacity: 0.3; 
+    }
+
+    /* Error State */
+    .error-container {
+      text-align: center;
+      padding: 4rem 2rem;
+      background: var(--secondary);
+      border: 2px solid var(--danger);
+      box-shadow: var(--shadow);
+      margin: 2rem 0;
+    }
+
+    .error-title {
+      font-size: 2rem;
+      color: var(--danger);
+      margin-bottom: 1rem;
+    }
+
+    .error-message {
+      font-size: 1.1rem;
+      color: var(--medium-gray);
+    }
+
+    /* Responsive */
+    @media (max-width: 768px) {
+      .analysis-grid {
+        grid-template-columns: 1fr;
+      }
+      
+      .hero-title {
+        font-size: 1.8rem;
+      }
+      
+      .dashboard-content {
+        padding: 1rem;
+      }
+
+      .pie-chart-container {
+        flex-direction: column;
+      }
+    }
+  </style>
+</head>
+<body>
+  <nav class="navbar">
+    <div class="navbar-container">
+      <a href="{% url 'index' %}" class="logo">
+        <div class="logo-icon">V</div>VibeCheck
+      </a>
+      <ul class="nav-menu">
+        <li class="nav-item"><a href="{% url 'index' %}" class="nav-link">Home</a></li>
+        <li class="nav-item"><a href="{% url 'about' %}" class="nav-link">About</a></li>
+        <li class="nav-item"><a href="{% url 'analyze' %}" class="nav-link">Analyze</a></li>
+        <li class="nav-item"><a href="{% url 'contact' %}" class="nav-link">Contact</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <main class="dashboard-content">
+    {% if video_id and video_info %}
+      <!-- Hero Section -->
+      <section class="hero-section">
+        <h1 class="hero-title">
+          <i class="fas fa-chart-line"></i> Analysis Complete
+        </h1>
+        <p class="hero-subtitle">Sentiment and language analysis of your video's audience</p>
+      </section>
+
+      <!-- Video Information Section -->
+      <section class="video-section">
+        <h1 class="video-title">{{ video_info.title }}</h1>
+        <p class="video-channel">by {{ video_info.channel }}</p>
+        
+        <div class="video-stats">
+          <div class="stat-card">
+            <span class="stat-number">{{ video_info.views|floatformat:0 }}</span>
+            <span class="stat-label">Views</span>
+          </div>
+          <div class="stat-card">
+            <span class="stat-number">{{ video_info.likes|floatformat:0 }}</span>
+            <span class="stat-label">Likes</span>
+          </div>
+          <div class="stat-card">
+            <span class="stat-number">{{ video_info.comments|floatformat:0 }}</span>
+            <span class="stat-label">Comments</span>
+          </div>
+          <div class="stat-card">
+            <span class="stat-number">{{ total_analyzed }}</span>
+            <span class="stat-label">Analyzed</span>
+          </div>
+        </div>
+
+        <div class="video-embed">
+          <iframe
+            src="https://www.youtube.com/embed/{{ video_id }}"
+            title="YouTube video player"
+            frameborder="0"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+            allowfullscreen>
+          </iframe>
+        </div>
+      </section>
+
+      <!-- Detailed Analysis Grid -->
+      <div class="analysis-grid">
+        <!-- Sentiment Analysis -->
+        {% if sentiment_stats %}
+        <div class="analysis-card">
+          <h2>
+            <i class="fas fa-thumbs-up icon"></i>
+            Sentiment Distribution
+          </h2>
+          <div class="sentiment-bars">
+            {% for sentiment in sentiment_stats %}
+            <div class="sentiment-bar">
+              <div class="sentiment-label">{{ sentiment.name|capfirst }}</div>
+              <div class="bar-container">
+                <div class="bar-fill {{ sentiment.name }}" style="width: {{ sentiment.percentage }}%;"></div>
+              </div>
+              <div class="sentiment-percent">{{ sentiment.count }} ({{ sentiment.percentage }}%)</div>
+            </div>
+            {% endfor %}
+          </div>
+        </div>
+        {% endif %}
+
+        <!-- Word Cloud -->
+        {% if wordcloud_image %}
+        <div class="analysis-card">
+          <h2>
+            <i class="fas fa-cloud icon"></i>
+            Word Cloud
+          </h2>
+          <div class="keywords-container">
+            <p style="font-size: 1rem; color: var(--medium-gray); margin-bottom: 1rem;">
+              Most frequently mentioned words
+            </p>
+            <img src="{{ wordcloud_image }}" alt="Comment Word Cloud">
+            <p style="font-style: italic; color: var(--medium-gray); font-size: 0.85rem; margin-top: 1rem;">
+              Based on meaningful nouns, verbs, and adjectives
+            </p>
+          </div>
+        </div>
+        {% endif %}
+
+        <!-- Language Distribution - Full Width -->
+        {% if language_stats %}
+        <div class="analysis-card full-width">
+          <h2>
+            <i class="fas fa-globe icon"></i>
+            Language Distribution
+          </h2>
+          <div class="language-grid">
+            {% for language in language_stats|slice:":10" %}
+            <div class="language-item">
+              <div class="language-name">{{ language.name }}</div>  
+              <div class="language-count">{{ language.count }}</div>
+              <div class="language-percentage">{{ language.percentage }}%</div>
+            </div>
+            {% endfor %}
+          </div>
+          {% if language_stats|length > 10 %}
+          <p style="text-align: center; color: var(--medium-gray); margin-top: 1.5rem; font-size: 0.9rem;">
+            Showing top 10 of {{ language_stats|length }} detected languages
+          </p>
+          {% endif %}
+        </div>
+        {% endif %}
+      </div>
+
+      <!-- Simple Pie Chart with SVG -->
+      <script>
+        document.addEventListener('DOMContentLoaded', function() {
+          // Create simple pie chart using SVG stroke-dasharray
+          const sentiments = [
+            {% for sentiment in sentiment_stats %}
+            { name: '{{ sentiment.name }}', percentage: {{ sentiment.percentage }}, color: '{% if sentiment.name == "positive" %}#2ecc71{% elif sentiment.name == "negative" %}#e74c3c{% else %}#f39c12{% endif %}' }{% if not forloop.last %},{% endif %}
+            {% endfor %}
+          ];
+
+          const circle = document.getElementById('pieCircle');
+          if (circle && sentiments.length > 0) {
+            const circumference = 2 * Math.PI * 25; // radius is 25
+            let cumulativePercent = 0;
+            
+            sentiments.forEach((sentiment, index) => {
+              const segment = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
+              segment.setAttribute('r', '25');
+              segment.setAttribute('cx', '50');
+              segment.setAttribute('cy', '50');
+              segment.setAttribute('fill', 'transparent');
+              segment.setAttribute('stroke', sentiment.color);
+              segment.setAttribute('stroke-width', '50');
+              
+              const dashLength = (sentiment.percentage / 100) * circumference;
+              const gapLength = circumference - dashLength;
+              
+              segment.setAttribute('stroke-dasharray', dashLength + ' ' + gapLength);
+              
+              // Calculate offset based on cumulative percentage
+              const offset = circumference - (cumulativePercent / 100 * circumference);
+              segment.setAttribute('stroke-dashoffset', offset);
+              segment.setAttribute('transform', 'rotate(-90 50 50)');
+              
+              circle.parentNode.appendChild(segment);
+              cumulativePercent += sentiment.percentage;
+            });
+            
+            circle.remove();
+          }
+
+          // Animate bars
+          const bars = document.querySelectorAll('.bar-fill');
+          bars.forEach(bar => {
+            const width = bar.style.width;
+            bar.style.width = '0%';
+            setTimeout(() => {
+              bar.style.width = width;
+            }, 300);
+          });
+        });
+      </script>
+
+    {% else %}
+      <!-- Error State -->
+      <div class="error-container">
+        <h1 class="error-title">
+          <i class="fas fa-exclamation-circle"></i> Something went wrong
+        </h1>
+        <p class="error-message">Could not generate the analysis dashboard. Please try another video.</p>
+        <a href="{% url 'analyze' %}" style="display: inline-block; margin-top: 2rem; padding: 1rem 2rem; background: var(--accent); color: var(--secondary); text-decoration: none; border: 2px solid var(--primary); box-shadow: var(--shadow); font-weight: 700;">
+          Try Another Video
+        </a>
+      </div>
+    {% endif %}
+  </main>
+
+  <div class="footer">
+    <div class="footer-section">
+      <h3>Brought to you by Group xy</h3>
+      <p>Anusmaya Rajeesh<br>Vedika Kadam<br>Bhairy Siddhartha</p>
+    </div>
+    <div class="divider"></div>
+    <div class="footer-section">
+      <h3>Contact Us</h3>
+      <p>Email: support@vibecheck.com<br>Phone: +91 12345 67890</p>
+    </div>
+  </div>
+</body>
+</html>

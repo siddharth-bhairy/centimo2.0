@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Contact Us</title>
+  <style>
+    :root {
+      --primary: #000000;   /* text color */
+      --secondary: #FFFFFF; /* background */
+      --accent: #FF5E5B;    /* highlight red */
+      --shadow: 8px 8px 0px var(--primary);
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Courier New', monospace;
+    }
+
+    body {
+      background-color: var(--secondary);
+      min-height: 100vh;
+      color: var(--primary);
+    }
+
+    /* Navbar */
+    .navbar {
+      background-color: var(--secondary);
+      border-bottom: 2px solid var(--primary);
+      padding: 0 2rem;
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 1000;
+      box-shadow: var(--shadow);
+    }
+
+    .navbar-container {
+      max-width: 1200px;
+      margin: 0 auto;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      height: 70px;
+    }
+
+    .logo {
+      display: flex;
+      align-items: center;
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: var(--primary);
+      text-decoration: none;
+    }
+
+    .logo-icon {
+      width: 40px;
+      height: 40px;
+      background: var(--accent);
+      border-radius: 12px;
+      margin-right: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--secondary);
+      font-weight: bold;
+      font-size: 1.2rem;
+      border: 2px solid var(--primary);
+      box-shadow: var(--shadow);
+    }
+
+    .nav-menu {
+      display: flex;
+      align-items: center;
+      list-style: none;
+      gap: 2rem;
+    }
+
+    .nav-link {
+      color: var(--primary);
+      text-decoration: none;
+      font-weight: 600;
+      padding: 0.6rem 1rem;
+      border: 2px solid transparent;
+      transition: all 0.3s ease;
+    }
+
+    .nav-link:hover {
+      border: 2px solid var(--primary);
+      background-color: var(--accent);
+      color: var(--secondary);
+      box-shadow: var(--shadow);
+    }
+
+    /* Contact Section */
+    .contact-section {
+      margin-top: 100px;
+      padding: 2rem;
+      text-align: center;
+    }
+
+    .contact-section h1 {
+      font-size: 2.5rem;
+      margin-bottom: 1rem;
+    }
+
+    .contact-section p {
+      font-size: 1.2rem;
+      margin-bottom: 2rem;
+      opacity: 0.9;
+    }
+
+    .form-container {
+      max-width: 600px;
+      margin: 0 auto;
+      background: var(--secondary);
+      border: 2px solid var(--primary);
+      border-radius: 12px;
+      padding: 2rem;
+      box-shadow: var(--shadow);
+    }
+
+    .form-container input,
+    .form-container textarea {
+      width: 100%;
+      padding: 1rem;
+      margin-bottom: 1.5rem;
+      border: 2px solid var(--primary);
+      border-radius: 8px;
+      background: var(--secondary);
+      color: var(--primary);
+      font-size: 1rem;
+      outline: none;
+      box-shadow: var(--shadow);
+    }
+
+    .form-container input:focus,
+    .form-container textarea:focus {
+      border-color: var(--accent);
+    }
+
+    .form-container button {
+      width: 100%;
+      padding: 1rem;
+      background: var(--accent);
+      color: var(--secondary);
+      border: 2px solid var(--primary);
+      border-radius: 8px;
+      font-size: 1rem;
+      font-weight: bold;
+      cursor: pointer;
+      transition: transform 0.2s ease, box-shadow 0.3s ease;
+      box-shadow: var(--shadow);
+    }
+
+    .form-container button:hover {
+      transform: translate(-4px, -4px);
+      box-shadow: 12px 12px 0px var(--primary);
+    }
+
+     /* Footer */
+    .footer {
+      background: var(--primary);
+      color: var(--secondary);
+      padding: 3rem 2rem;
+      text-align: left;
+      margin-top: 4rem;
+      display: flex;
+      justify-content: center;
+      align-items: flex-start;
+      gap: 2rem; /* space between sections */
+    }
+
+    .footer-section {
+      flex: 1;
+    }
+
+    .divider {
+      width: 1px;
+      background: var(--secondary);
+      opacity: 0.3;
+    }
+  </style>
+</head>
+<body>
+  <nav class="navbar">
+    <div class="navbar-container">
+      <a href="home.html" class="logo">
+        <div class="logo-icon">V</div>
+        VibeCheck
+      </a>
+
+      <ul class="nav-menu">
+        <li class="nav-item"><a href={% url "index" %} class="nav-link">Home</a></li>
+        <li class="nav-item"><a href={% url "about" %} class="nav-link">About</a></li>
+        <li class="nav-item"><a href={% url "analyze" %} class="nav-link">Analyze</a></li>
+        <li class="nav-item"><a href={% url "contact" %} class="nav-link">Contact</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <div class="contact-section">
+    <h1>Contact Us</h1>
+    <p>We value your feedback! Please share your thoughts or ask any questions below.</p>
+
+    <div class="form-container">
+        {% if msg %}
+        <p style="color: green;">{{ msg }}</p>
+    {% endif %}
+
+    <form action="{% url 'contact' %}" method="POST">
+        {% csrf_token %}
+        <input type="email" name="email" placeholder="Your Email Address" required>  
+        <br><br>                                                                 
+        <textarea name="feedback" rows="5" placeholder="Your Feedback" required></textarea>
+        <br><br>
+        <button type="submit">Submit Feedback</button>
+    </form>
+
+    </div>
+  </div>
+    <div class="footer">
+  <div class="footer-section">
+    <h3>Brought to you by Group xy</h3>
+    <p>Anusmaya Rajeesh<br>
+      Vedika Kadam<br>
+      Bhairy Siddhartha<br>
+    </p>
+  </div>
+  <div class="divider"></div>
+  <div class="footer-section">
+    <h3>Contact Us</h3>
+    <p>Email: support@vibecheck.com<br>Phone: +91 12345 67890</p>
+  </div>
+  </div>
+</body>
+</html>

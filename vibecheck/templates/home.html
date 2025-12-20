@@ -1,0 +1,504 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>VibeCheck - Home</title>
+  <style>
+    :root {
+      --primary: #000000;   /* text color */
+      --secondary: #FFFFFF; /* background */
+      --accent: #FF5E5B;    /* highlight red */
+      --shadow: 8px 8px 0px var(--primary);
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Courier New', monospace;
+    }
+
+    body {
+      background-color: var(--secondary);
+      min-height: 100vh;
+      color: var(--primary);
+    }
+
+    /* Navbar */
+    .navbar {
+      background-color: var(--secondary);
+      border-bottom: 2px solid var(--primary);
+      padding: 0 2rem;
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 1000;
+      box-shadow: var(--shadow);
+    }
+
+    .navbar-container {
+      max-width: 1200px;
+      margin: 0 auto;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      height: 70px;
+    }
+
+    .logo {
+      display: flex;
+      align-items: center;
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: var(--primary);
+      text-decoration: none;
+    }
+
+    .logo-icon {
+      width: 40px;
+      height: 40px;
+      background: var(--accent);
+      border-radius: 12px;
+      margin-right: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--secondary);
+      font-weight: bold;
+      font-size: 1.2rem;
+      border: 2px solid var(--primary);
+      box-shadow: var(--shadow);
+    }
+
+    .nav-menu {
+      display: flex;
+      align-items: center;
+      list-style: none;
+      gap: 2rem;
+    }
+
+    .nav-link {
+      color: var(--primary);
+      text-decoration: none;
+      font-weight: 600;
+      padding: 0.6rem 1rem;
+      border: 2px solid transparent;
+      transition: all 0.3s ease;
+    }
+
+    .nav-link:hover {
+      border: 2px solid var(--primary);
+      background-color: var(--accent);
+      color: var(--secondary);
+      box-shadow: var(--shadow);
+    }
+
+    /* Main Layout */
+    .main-container {
+      margin-top: 80px;
+      max-width: 1400px;
+      margin-left: auto;
+      margin-right: auto;
+      padding: 2rem;
+      display: grid;
+      grid-template-columns: 1fr 400px;
+      gap: 3rem;
+      position: relative;
+    }
+
+    /* Left Content */
+    .content-left {
+      max-width: 800px;
+    }
+
+    .hero-section {
+      margin-bottom: 3rem;
+    }
+
+    .hero-section h1 {
+      font-size: 3rem;
+      line-height: 1.2;
+      margin-bottom: 1.5rem;
+      color: var(--primary);
+    }
+
+    .hero-section p {
+      font-size: 1.3rem;
+      line-height: 1.6;
+      margin-bottom: 2rem;
+      color: #555;
+    }
+
+    /* Content Sections */
+    .content-section {
+      margin-bottom: 4rem;
+      padding: 2rem 0;
+      border-bottom: 1px solid #eee;
+    }
+
+    .content-section:last-child {
+      border-bottom: none;
+    }
+
+    .section-header {
+      display: flex;
+      align-items: center;
+      gap: 2rem;
+      margin-bottom: 2rem;
+    }
+
+    .section-number {
+      width: 60px;
+      height: 60px;
+      background: var(--accent);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--secondary);
+      font-weight: bold;
+      font-size: 1.5rem;
+      border: 2px solid var(--primary);
+      box-shadow: var(--shadow);
+      flex-shrink: 0;
+    }
+
+    .section-header h2 {
+      font-size: 2.2rem;
+      color: var(--primary);
+      margin: 0;
+    }
+
+    .section-content {
+      display: grid;
+      grid-template-columns: 1fr 300px;
+      gap: 2rem;
+      align-items: start;
+    }
+
+    .section-text {
+      font-size: 1.1rem;
+      line-height: 1.7;
+      color: #333;
+    }
+
+      .section-image {
+      width: 100%;
+      height: 200px;
+      border-radius: 12px;
+      border: 2px solid var(--primary);
+      box-shadow: var(--shadow);
+      transition: transform 0.3s ease;
+      object-fit: cover; /* This will now work correctly on the <img> tag */
+    }
+
+    .section-image:hover {
+      transform: translate(-3px, -3px);
+      box-shadow: 12px 12px 0px var(--primary);
+    }
+
+    /* Sticky Sidebar */
+    .sidebar {
+      position: sticky;
+      top: 100px;
+      height: fit-content;
+      background: var(--secondary);
+      border: 2px solid var(--primary);
+      border-radius: 16px;
+      padding: 1.6rem;
+      box-shadow: var(--shadow);
+    }
+
+    .sidebar h3 {
+      font-size: 1.6rem;
+      margin-bottom: 1.2rem;
+      color: var(--accent);
+      text-align: center;
+    }
+
+    .sidebar-content {
+      text-align: center;
+    }
+
+    .sidebar-graphic {
+      width: 100%;
+      height: 180px;
+      background: linear-gradient(135deg, #ffffffff, #ffffffff);
+      border-radius: 12px;
+      border: 2px solid var(--primary);
+      margin-bottom: 1.2rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 2.8rem;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .sidebar-graphic img {
+      max-width: 100%;
+      max-height: 100%;
+      border-radius: 10px; /* optional */
+      object-fit: cover;   /* makes it fill nicely */
+    }
+
+
+    .sidebar-text {
+      font-size: 1rem;
+      line-height: 1.7;
+      margin-bottom: 1.2rem;
+      color: #555;
+    }
+
+    .cta-button {
+      background: var(--accent);
+      color: var(--secondary);
+      border: 2px solid var(--primary);
+      padding: 0.8rem 1.5rem;
+      border-radius: 8px;
+      font-weight: bold;
+      font-size: 1rem;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      box-shadow: var(--shadow);
+      text-decoration: none;
+      display: inline-block;
+    }
+
+    .cta-button:hover {
+      transform: translate(-3px, -3px);
+      box-shadow: 12px 12px 0px var(--primary);
+      background: #ff4b47;
+    }
+
+    /* Footer */
+    .footer {
+      background: var(--primary);
+      color: var(--secondary);
+      padding: 3rem 2rem;
+      text-align: left;
+      margin-top: 4rem;
+      display: flex;
+      justify-content: center;
+      align-items: flex-start;
+      gap: 2rem; /* space between sections */
+    }
+
+    .footer-section {
+      flex: 1;
+    }
+
+    .divider {
+      width: 1px;
+      background: var(--secondary);
+      opacity: 0.3;
+    }
+
+
+    /* Responsive */
+    @media (max-width: 1024px) {
+      .main-container {
+        grid-template-columns: 1fr;
+        gap: 2rem;
+      }
+
+      .sidebar {
+        position: static;
+        order: -1;
+      }
+
+      .section-content {
+        grid-template-columns: 1fr;
+        gap: 1.5rem;
+      }
+
+      .section-header {
+        flex-direction: column;
+        text-align: center;
+        gap: 1rem;
+      }
+
+      .hero-section h1 {
+        font-size: 2.5rem;
+      }
+    }
+
+    @media (max-width: 768px) {
+      .nav-menu {
+        display: none;
+      }
+
+      .hero-section h1 {
+        font-size: 2rem;
+      }
+
+      .section-header h2 {
+        font-size: 1.8rem;
+      }
+
+      .main-container {
+        padding: 1rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <nav class="navbar">
+    <div class="navbar-container">
+      <a href="#" class="logo">
+        <div class="logo-icon">V</div>
+        VibeCheck
+      </a>
+
+      <ul class="nav-menu">
+        <li class="nav-item"><a href={% url "index" %} class="nav-link">Home</a></li>
+        <li class="nav-item"><a href={% url "about" %} class="nav-link">About</a></li>
+        <li class="nav-item"><a href={% url "analyze" %} class="nav-link">Analyze</a></li>
+        <li class="nav-item"><a href={% url "contact" %} class="nav-link">Contact</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <div class="main-container">
+    <!-- Left Content -->
+    <div class="content-left">
+      <!-- Hero Section -->
+      <div class="hero-section">
+        <h1>See what people are talking about, on YouTube using the VibeCheck sentiment analyzer.</h1>
+        <p>Wanna know what the comments are saying about your favourite YouTube Video? You got it. Using advanced machine learning techniques we provide sentiment analysis results on the go.</p>
+      </div>
+
+      <!-- Section 1 -->
+      <div class="content-section">
+        <div class="section-header">
+          <div class="section-number">1</div>
+          <h2>What is sentiment analysis?</h2>
+        </div>
+        <div class="section-content">
+          <div class="section-text">
+            <p>Sentiment analysis, also known as opinion mining, is an automated process that uses natural language processing (NLP) to identify and extract subjective information from text. It categorizes opinions expressed in a piece of text as positive, negative, or neutral.</p>
+            <p>This technology is a powerful tool for understanding the underlying emotion, attitude, or feeling of the author.</p>
+          </div>
+          <img class="section-image" src="{% static 'images/homepage-image1.png' %}" alt="Sentiment Analysis Graphic" />
+        </div>
+      </div>
+
+      <!-- Section 2 -->
+      <div class="content-section">
+        <div class="section-header">
+          <div class="section-number">2</div>
+          <h2>How we analyze Sentiments?</h2>
+        </div>
+        <div class="section-content">
+          <div class="section-text">
+            <p>We measure sentiment using a powerful combination of machine learning and natural language processing (NLP).
+               Our proprietary algorithm processes text by first tokenizing it—breaking it down into individual words and phrases.
+              It then analyzes these tokens against a vast database of emotionally charged words and contextual cues to determine
+              the overall sentiment. The result is an accurate classification of the text's tone, providing actionable insights into public opinion.</p>
+          </div>
+          <div class="section-image">
+            <img class="section-image" src="{% static 'images/homepage-image2.png' %}" alt="Sentiment Analysis Graphic" />
+          </div>
+        </div>
+      </div>
+
+      <!-- Section 3 -->
+      <div class="content-section">
+        <div class="section-header">
+          <div class="section-number">3</div>
+          <h2>How are comments collected?</h2>
+        </div>
+        <div class="section-content">
+          <div class="section-text">
+            <p>To analyze a YouTube video, we use the official YouTube Data API to collect the comments. 
+              When you provide a video URL, our system sends a secure request to the API to retrieve all 
+              available comments and their associated details.</p>
+            <p>This process is automated and allows us to gather large volumes of data efficiently and in 
+              compliance with YouTube's terms of service. Once the comments are collected, they are passed 
+              to our sentiment analysis models for processing.</p>
+          </div>
+          <div class="section-image">
+            <img class="section-image" src="{% static 'images/homepage-image3.png' %}" alt="Sentiment Analysis Graphic" />
+          </div>
+        </div>
+      </div>
+
+      <!-- Section 4 -->
+      <div class="content-section">
+        <div class="section-header">
+          <div class="section-number">4</div>
+          <h2>Why use VibeCheck?</h2>
+        </div>
+        <div class="section-content">
+          <div class="section-text">
+            <p>Choose VibeCheck for its unique ability to transform raw, unstructured text into actionable insights. Instead of manually 
+              sifting through thousands of comments, our platform automates the entire process, providing instant, easy-to-understand 
+              sentiment scores.</p>
+            <p>This saves you time and helps you make data-driven decisions about your brand, content, or product based on real-time 
+              audience feedback. It's the most efficient way to truly understand what your audience thinks and feels.</p>
+          </div>
+          <div class="section-image">
+              <img class="section-image" src="{% static 'images/homepage-image4.png' %}" alt="Sentiment Analysis Graphic" />
+          </div>
+        </div>
+      </div>
+
+      <!-- Section 5 -->
+      <div class="content-section">
+        <div class="section-header">
+          <div class="section-number">5</div>
+          <h2>The Nuances of Language</h2>
+        </div>
+        <div class="section-content">
+          <div class="section-text">
+            <p>Please note that even advanced technology, including our sentiment analysis platform, can occasionally
+              produce inaccurate results. Sentiment analysis is a complex field, and the nuances of human language—such 
+              as sarcasm, irony, slang, and context-specific humor—can be difficult for a machine to interpret correctly.
+            </p>
+            <p>While our models are highly trained and continuously learning, they are not infallible. The results should
+               be used as a general guide to help you understand public sentiment, not as a definitive source of truth for every 
+               single comment.
+              </p>
+          </div>
+          <div class="section-image">
+            <img class="section-image" src="{% static 'images/homepage-image5.png' %}" alt="Sentiment Analysis Graphic" />
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Right Sidebar -->
+    <div class="sidebar">
+      <h3>Youtube Comments Sentiment Analysis</h3>
+      <div class="sidebar-content">
+        <div class="sidebar-graphic">
+          <img src="{% static 'images/homepage-image1.png' %}" alt="Sidebar Graphic" />
+        </div>
+        <p class="sidebar-text">Keep an eye on <strong>brand sentiment and search millions of conversations</strong> right from the VibeCheck dashboard. Listening is included with every plan.</p>
+        <a href="{% url "analyze" %}" class="cta-button">Analyze</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <div class="footer">
+  <div class="footer-section">
+    <h3>Brought to you by Group xy</h3>
+    <p>Anusmaya Rajeesh<br>
+      Vedika Kadam<br>
+      Bhairy Siddhartha<br>
+    </p>
+  </div>
+  <div class="divider"></div>
+  <div class="footer-section">
+    <h3>Contact Us</h3>
+    <p>Email: support@vibecheck.com<br>Phone: +91 12345 67890</p>
+  </div>
+  </div>
+
+</body>
+</html>

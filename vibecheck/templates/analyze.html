@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css" crossorigin="anonymous">
+  <title>Analyze</title>
+  <style>
+    :root {
+      --primary: #000000;
+      --secondary: #FFFFFF;
+      --accent: #FF5E5B;
+      --shadow: 8px 8px 0px var(--primary);
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Courier New', monospace;
+    }
+
+    body {
+      background-color: var(--secondary);
+      min-height: 100vh;
+      color: var(--primary);
+    }
+
+    /* Navbar */
+    .navbar {
+      background-color: var(--secondary);
+      border-bottom: 2px solid var(--primary);
+      padding: 0 2rem;
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 1000;
+      box-shadow: var(--shadow);
+    }
+
+    .navbar-container {
+      max-width: 1200px;
+      margin: 0 auto;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      height: 70px;
+    }
+
+    .logo {
+      display: flex;
+      align-items: center;
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: var(--primary);
+      text-decoration: none;
+    }
+
+    .logo-icon {
+      width: 40px;
+      height: 40px;
+      background: var(--accent);
+      border-radius: 12px;
+      margin-right: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--secondary);
+      font-weight: bold;
+      font-size: 1.2rem;
+      border: 2px solid var(--primary);
+      box-shadow: var(--shadow);
+    }
+
+    .nav-menu {
+      display: flex;
+      align-items: center;
+      list-style: none;
+      gap: 2rem;
+    }
+
+    .nav-link {
+      color: var(--primary);
+      text-decoration: none;
+      font-weight: 600;
+      padding: 0.6rem 1rem;
+      border: 2px solid transparent;
+      transition: all 0.3s ease;
+    }
+
+    .nav-link:hover {
+      border: 2px solid var(--primary);
+      background-color: var(--accent);
+      color: var(--secondary);
+      box-shadow: var(--shadow);
+    }
+
+    /* Main Content */
+    .main-content {
+      margin-top: 90px;
+      padding: 2rem;
+      text-align: center;
+    }
+
+    .search-title {
+      color: var(--primary);
+      font-size: 2.5rem;
+      font-weight: 700;
+      margin-bottom: 40px;
+    }
+
+    /* Search Form */
+      form {
+      position: relative;
+      margin: 0 auto;
+      width: 50px;
+      height: 50px;
+      border-radius: 25px;
+      border: 2px solid var(--primary);
+      background-color: var(--secondary);
+      box-shadow: var(--shadow);
+      transition: all 0.6s ease;
+      overflow: hidden;
+    }
+
+  input {
+    position: absolute;
+    top: 2px;
+    left: 2px;
+    width: 0;
+    height: 42px;
+    border: none;
+    outline: none;
+    background: var(--secondary);
+    color: var(--primary);
+    font-size: 1em;
+    padding: 0 15px;
+    transition: all 0.6s ease;
+  }
+
+  input::placeholder {
+    color: #666;
+  }
+
+  .fa {
+    position: absolute;
+    top: 4px;
+    right: 4px;
+    width: 42px;
+    height: 42px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--accent);
+    cursor: pointer;
+    font-size: 1.2em;
+    transition: all 0.6s ease;
+    border-radius: 50%;
+  }
+
+  button {
+    display: none;
+    position: absolute;
+    top: 60px;
+    left: 0;
+    right: 0;
+    padding: 10px;
+    background: var(--accent);
+    color: var(--secondary);
+    border: 2px solid var(--primary);
+    border-radius: 25px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.3s ease;
+  }
+
+  button:hover {
+    box-shadow: var(--shadow);
+    transform: translate(-2px, -2px);
+  }
+
+  /* Trigger expansion */
+  form:hover,
+  form:focus-within {
+    width: 300px;
+  }
+
+  form:hover input,
+  form:focus-within input {
+    width: calc(100% - 50px);
+  }
+
+  form:hover .fa,
+  form:focus-within .fa {
+    background: var(--accent);
+    color: var(--secondary);
+  }
+
+  form:focus-within button {
+    display: block;
+  }
+
+   /* Footer */
+    .footer {
+      background: var(--primary);
+      color: var(--secondary);
+      padding: 3rem 2rem;
+      text-align: left;
+      margin-top: 4rem;
+      display: flex;
+      justify-content: center;
+      align-items: flex-start;
+      gap: 2rem; /* space between sections */
+    }
+
+    .footer-section {
+      flex: 1;
+    }
+
+    .divider {
+      width: 1px;
+      background: var(--secondary);
+      opacity: 0.3;
+    }
+  </style>
+</head>
+<body>
+  <nav class="navbar">
+    <div class="navbar-container">
+      <a href="home.html" class="logo">
+        <div class="logo-icon">V</div>
+        VibeCheck
+      </a>
+      <ul class="nav-menu">
+        <li class="nav-item"><a href="{% url 'index' %}" class="nav-link">Home</a></li>
+        <li class="nav-item"><a href="{% url 'about' %}" class="nav-link">About</a></li>
+        <li class="nav-item"><a href="{% url 'analyze' %}" class="nav-link">Analyze</a></li>
+        <li class="nav-item"><a href="{% url 'contact' %}" class="nav-link">Contact</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <div class="main-content">
+    <h1 class="search-title">Analyze & Search</h1>
+    
+  <form id="searchForm" method="POST" action="{% url 'analyze' %}">
+    {% csrf_token %}
+    <input type="search" name="youtube_url" placeholder="Enter your query..." autofocus required>
+    <i class="fa fa-search" onclick="submitSearch()"></i>
+    <button type="button" onclick="clearInput()">Clear</button>
+  </form>
+
+  </div>
+  {% if messages %}
+    {% for message in messages %}
+     <p class="main-content" style="color: red; font-weight: bold;">{{ message }}</p>
+    {% endfor %}
+  {% endif %}
+
+    
+
+    <div class="footer">
+  <div class="footer-section">
+    <h3>Brought to you by Group xy</h3>
+    <p>Anusmaya Rajeesh<br>
+      Vedika Kadam<br>
+      Bhairy Siddhartha<br>
+    </p>
+  </div>
+  <div class="divider"></div>
+  <div class="footer-section">
+    <h3>Contact Us</h3>
+    <p>Email: support@vibecheck.com<br>Phone: +91 12345 67890</p>
+  </div>
+  </div>
+
+  <script>
+    const clearInput = () => {
+      const input = document.getElementsByTagName("input")[0];
+      input.value = "";
+      input.focus();
+    }
+
+       const submitSearch = () => {
+      document.getElementById('searchForm').submit();
+    }
+  </script>
+</body>
+</html>
