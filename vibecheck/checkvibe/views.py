@@ -235,7 +235,7 @@ def analyze(request):
             messages.error(request, "Please enter a valid YouTube video URL.")
             return redirect("analyze")
         
-        api_key = "AIzaSyDqiXJ12BEFcnlXferZRExPSkje7uUITgg"
+        api_key = "enter api key here"
         if not api_key:
             messages.error(request, "Server configuration error: YouTube API key not found.")
             return redirect("analyze")
@@ -262,4 +262,5 @@ def contact(request):
             msg = "Thank you for your feedback!"
         else:
             msg = "Please fill out all fields."
+
     return render(request, "contact.html", {"msg": msg})  
